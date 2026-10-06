@@ -5,11 +5,11 @@ import { checksColor, parseGithub, parseGitlab } from './forge'
 test('parseGitlab reads the MR and keeps only human notes', async () => {
   const view = parseGitlab(
     JSON.stringify({
-      iid: 678,
-      title: 'Optional meal plan name',
+      iid: 12,
+      title: 'Add dark mode toggle',
       state: 'opened',
       draft: false,
-      web_url: 'https://gitlab.com/group/repo/-/merge_requests/678',
+      web_url: 'https://gitlab.com/group/repo/-/merge_requests/12',
       author: { username: 'dev' },
       source_branch: 'feature/x',
       target_branch: 'main',
@@ -35,7 +35,7 @@ test('parseGitlab reads the MR and keeps only human notes', async () => {
     }),
   )
 
-  expect(view.number).toBe('!678')
+  expect(view.number).toBe('!12')
   expect(view.checks).toBe('success')
   expect(view.notes).toEqual([
     { author: 'reviewer', body: 'Rename this?', createdAt: '2026-10-05T14:00:00Z', path: 'lib/a.dart', line: 12, isResolved: false },

@@ -94,11 +94,11 @@ test('fileTree groups files under one row per folder', async () => {
 
 test('sortByFolder keeps a folder\'s files together under one heading', async () => {
   const file = (path: string) => ({ path, status: 'modified' as const, added: 1, removed: 0, hunks: [] })
-  const sorted = sortByFolder([file('.maestro/README.md'), file('.maestro/auth/login.yaml'), file('.maestro/z.yaml')])
+  const sorted = sortByFolder([file('docs/README.md'), file('docs/auth/login.yaml'), file('docs/z.yaml')])
 
-  expect(sorted.map(one => one.path)).toEqual(['.maestro/README.md', '.maestro/z.yaml', '.maestro/auth/login.yaml'])
+  expect(sorted.map(one => one.path)).toEqual(['docs/README.md', 'docs/z.yaml', 'docs/auth/login.yaml'])
   expect(fileTree(sorted).filter(row => row.kind === 'dir').map(row => row.kind === 'dir' && row.path)).toEqual([
-    '.maestro/',
-    '.maestro/auth/',
+    'docs/',
+    'docs/auth/',
   ])
 })

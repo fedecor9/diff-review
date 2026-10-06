@@ -7,20 +7,20 @@ test('parseGitlabPipeline orders stages by first job id and folds job statuses',
     JSON.stringify({
       id: 7,
       status: 'running',
-      ref: 'refs/merge-requests/678/merge',
+      ref: 'refs/merge-requests/12/merge',
       web_url: 'https://gitlab.com/g/r/-/pipelines/7',
       started_at: '2026-10-05T13:37:00Z',
       jobs: [
         { id: 13, name: 'test', stage: 'test', status: 'running', started_at: '2026-10-05T13:38:00Z' },
         { id: 12, name: 'lint', stage: 'test', status: 'success', started_at: '2026-10-05T13:38:00Z', finished_at: '2026-10-05T13:39:00Z' },
-        { id: 11, name: 'build-builder', stage: 'build', status: 'success', started_at: '2026-10-05T13:37:00Z', finished_at: '2026-10-05T13:38:00Z' },
+        { id: 11, name: 'compile', stage: 'build', status: 'success', started_at: '2026-10-05T13:37:00Z', finished_at: '2026-10-05T13:38:00Z' },
       ],
     }),
   )
 
-  expect(pipeline.ref).toBe('!678 merge')
+  expect(pipeline.ref).toBe('!12 merge')
   expect(pipeline.stages.map(stage => [stage.name, stage.status, stage.jobs.map(job => job.name)])).toEqual([
-    ['build', 'success', ['build-builder']],
+    ['build', 'success', ['compile']],
     ['test', 'running', ['lint', 'test']],
   ])
 })
@@ -37,13 +37,13 @@ test('stageStatus lets an allowed failure pass and waits on pending jobs', async
 test('currentCommand finds the last $ command and its latest output in a trace', async () => {
   const trace = [
     '2026-10-05T13:38:43.829443Z 00O+section_start:1791207523:step_script',
-    '2026-10-05T13:38:44.328306Z 01O $ [ -d /opt/app ] && cd /opt/app',
-    '2026-10-05T13:38:44.328320Z 01O \u001b[32;1m$ scripts/ci/test.sh --with-coverage\u001b[0;m',
-    '2026-10-05T13:42:08.076219Z 01O 00:42 +120: All tests passed',
+    '2026-10-05T13:38:44.328306Z 01O $ npm ci',
+    '2026-10-05T13:38:44.328320Z 01O \u001b[32;1m$ npm test -- --coverage\u001b[0;m',
+    '2026-10-05T13:42:08.076219Z 01O Tests: 120 passed',
     '2026-10-05T13:42:08.076229Z 01O ',
   ].join('\n')
 
-  expect(currentCommand(trace)).toEqual({ command: 'scripts/ci/test.sh --with-coverage', output: '00:42 +120: All tests passed' })
+  expect(currentCommand(trace)).toEqual({ command: 'npm test -- --coverage', output: 'Tests: 120 passed' })
   expect(currentCommand('no commands here')).toEqual({})
 })
 
