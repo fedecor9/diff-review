@@ -15,7 +15,7 @@ agent's diff beside the chat, comment on hunks, and send the comments back to th
 In a Claude Code terminal session:
 
 ```
-/plugin install diff-review --marketplace <owner>/<repo>
+/plugin install diff-review --marketplace fedecor9/diff-review
 ```
 
 Answer `y` to add the marketplace, then pick a scope (user scope loads it in every session).
