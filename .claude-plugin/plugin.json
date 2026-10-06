@@ -1,0 +1,7 @@
+{
+  "name": "diff-review",
+  "version": "0.2.0",
+  "description": "A reviewr-style review pane: diff with file sidebar (uncommitted, branch, last-turn, last-commit scopes), the branch's MR/PR, and a live pipeline diagram. Hunk comments go to the prompt.",
+  "author": { "name": "Federico Correa" },
+  "types": "./types/index.d.ts"
+}

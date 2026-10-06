@@ -1,0 +1,6 @@
+{
+  "name": "diff-review",
+  "owner": { "name": "Federico Correa" },
+  "description": "diff-review: a reviewr-style diff, MR and pipeline pane for Claude Code.",
+  "plugins": [{ "name": "diff-review", "source": "./" }]
+}
